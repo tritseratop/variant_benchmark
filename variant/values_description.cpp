@@ -4,7 +4,7 @@ size_t InputDataValue::totalSize() const {
 	return int_v.size() + float_v.size() + double_v.size() + string_v.size();
 }
 
-void moveInputDataToStructValue(std::vector<InputDataValue>&& source, std::vector<StructValue>& dest) {
+void moveInputDataToStructValue(std::vector<InputDataValue>&& source) {
 	for (auto&& vect : source) {
 		StructValue value{
 			std::move(vect.int_v),
@@ -20,7 +20,7 @@ void moveInputDataToStructValue(std::vector<InputDataValue>&& source, std::vecto
 	}
 }
 
-void copyInputDataToStructValue(const std::vector<InputDataValue>& source, std::vector<StructValue>& dest) {
+void copyInputDataToStructValue(const std::vector<InputDataValue>& source) {
 	for (const auto& vect : source) {
 		StructValue value{
 			vect.int_v,
@@ -36,7 +36,7 @@ void copyInputDataToStructValue(const std::vector<InputDataValue>& source, std::
 	}
 }
 
-void copyInputDataToVariantValue(const std::vector<InputDataValue>& source, std::vector<VariantValue>& dest) {
+void copyInputDataToVariantValue(const std::vector<InputDataValue>& source) {
 	for (const auto& vect : source) {
 
 		VariantValue value;

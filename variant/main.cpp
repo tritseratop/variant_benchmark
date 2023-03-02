@@ -9,30 +9,20 @@
 #include <algorithm>
 
 void TestMoveStruct(std::string_view message, std::vector<InputDataValue>&& inputs) {
-	std::vector<StructValue> outputs;
-	outputs.reserve(NUMBER_OF_CYCLES);
-	{
-		LOG_DURATION(message.data());
-		moveInputDataToStructValue(std::move(inputs), outputs);
-	}
+	LOG_DURATION(message.data());
+	moveInputDataToStructValue(std::move(inputs));
+
 }
 
 void TestCopyStruct(std::string_view message, const std::vector<InputDataValue>& inputs) {
-	std::vector<StructValue> outputs;
-	outputs.reserve(NUMBER_OF_CYCLES);
-	{
-		LOG_DURATION(message.data());
-		copyInputDataToStructValue(inputs, outputs);
-	}
+	LOG_DURATION(message.data());
+	copyInputDataToStructValue(inputs);
+
 }
 
 void TestCopyVariant(std::string_view message, const std::vector<InputDataValue>& inputs) {
-	std::vector<VariantValue> outputs;
-	outputs.reserve(NUMBER_OF_CYCLES);
-	{
-		LOG_DURATION(message.data());
-		copyInputDataToVariantValue(inputs, outputs);
-	}
+	LOG_DURATION(message.data());
+	copyInputDataToVariantValue(inputs);
 }
 
 void TestMoveStructWithInt(const std::vector<size_t>& numbers) {
