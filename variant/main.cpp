@@ -1,181 +1,65 @@
-﻿#include "utility.h"
-#include "constant.h"
-
-#include "profiler.h"
+﻿#include "test_with_storage.h"
+#include "test_without_storage.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <algorithm>
 
-void TestMoveStruct(std::string_view message, std::vector<InputDataValue>&& inputs) {
-	LOG_DURATION(message.data());
-	moveInputDataToStructValue(std::move(inputs));
-
-}
-
-void TestCopyStruct(std::string_view message, const std::vector<InputDataValue>& inputs) {
-	LOG_DURATION(message.data());
-	copyInputDataToStructValue(inputs);
-
-}
-
-void TestCopyVariant(std::string_view message, const std::vector<InputDataValue>& inputs) {
-	LOG_DURATION(message.data());
-	copyInputDataToVariantValue(inputs);
-}
-
-void TestMoveStructWithInt(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithInt(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " int) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithInt(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithInt(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " int) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithInt(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithInt(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " int) to VARIANT", inputs);
-	}
-}
-
-void TestMoveStructWithFloat(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithFloat(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " float) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithFloat(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithFloat(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " float) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithFloat(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithFloat(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " float) to VARIANT", inputs);
-	}
-}
-
-void TestMoveStructWithDouble(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithDouble(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " double) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithDouble(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithDouble(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " double) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithDouble(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithDouble(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " double) to VARIANT", inputs);
-	}
-}
-
-void TestMoveStructWithString(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithString(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " string) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithString(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithString(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " string) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithString(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithString(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " string) to VARIANT", inputs);
-	}
-}
-
-void TestMoveStructWithNumeric(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithNumeric(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " numeric) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithNumeric(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithNumeric(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " numeric) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithNumeric(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithNumeric(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " numeric) to VARIANT", inputs);
-	}
-}
-
-void TestMoveStructWithAll(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithAll(number);
-		TestMoveStruct("MOVE Data (" + std::to_string(number) + " total) to STRUCT", std::move(inputs));
-	}
-}
-
-void TestCopyStructWithAll(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithAll(number);
-		TestCopyStruct("COPY data (" + std::to_string(number) + " total) to STRUCT", inputs);
-	}
-}
-
-void TestCopyVariantWithAll(const std::vector<size_t>& numbers) {
-	for (auto number : numbers) {
-		auto inputs = CreateInputDataWithAll(number);
-		TestCopyVariant("COPY data (" + std::to_string(number) + " total) to VARIANT", inputs);
-	}
-}
-
 int main()
 {
-	TestMoveStructWithInt(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithInt(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithInt(NUMBERS_OF_SAMPLES);
+	/*
+	TestMoveStructWithIntWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithIntWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithIntWithStorage(NUMBERS_OF_SAMPLES);
+	
+	TestMoveStructWithFloatWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithFloatWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithFloatWithStorage(NUMBERS_OF_SAMPLES);
+	
+	TestMoveStructWithDoubleWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithDoubleWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithDoubleWithStorage(NUMBERS_OF_SAMPLES);
+	
+	TestMoveStructWithStringWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithStringWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithStringWithStorage(NUMBERS_OF_SAMPLES);
 
-	TestMoveStructWithFloat(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithFloat(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithFloat(NUMBERS_OF_SAMPLES);
+	TestMoveStructWithNumericWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithNumericWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithNumericWithStorage(NUMBERS_OF_SAMPLES);
 
-	TestMoveStructWithDouble(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithDouble(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithDouble(NUMBERS_OF_SAMPLES);
+	TestMoveStructWithAllWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithAllWithStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithAllWithStorage(NUMBERS_OF_SAMPLES);
 
-	TestMoveStructWithString(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithString(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithString(NUMBERS_OF_SAMPLES);
+	std::cout << std::endl;
+	*/
 
-	TestMoveStructWithNumeric(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithNumeric(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithNumeric(NUMBERS_OF_SAMPLES);
+	TestMoveStructWithIntWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithIntWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithIntWithoutStorage(NUMBERS_OF_SAMPLES);
 
-	TestMoveStructWithAll(NUMBERS_OF_SAMPLES);
-	TestCopyStructWithAll(NUMBERS_OF_SAMPLES);
-	TestCopyVariantWithAll(NUMBERS_OF_SAMPLES);
+	TestMoveStructWithFloatWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithFloatWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithFloatWithoutStorage(NUMBERS_OF_SAMPLES);
 
+	TestMoveStructWithDoubleWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithDoubleWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithDoubleWithoutStorage(NUMBERS_OF_SAMPLES);
+
+	TestMoveStructWithStringWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithStringWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithStringWithoutStorage(NUMBERS_OF_SAMPLES);
+
+	TestMoveStructWithNumericWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithNumericWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithNumericWithoutStorage(NUMBERS_OF_SAMPLES);
+
+	TestMoveStructWithAllWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyStructWithAllWithoutStorage(NUMBERS_OF_SAMPLES);
+	TestCopyVariantWithAllWithoutStorage(NUMBERS_OF_SAMPLES);
+
+	system("pause");
 	return 0;
 }
