@@ -32,8 +32,16 @@ struct InputAlarmExValue {
 	std::vector<char> char_v;
 };
 
-void moveInputDataToStructValue(std::vector<InputDataValue>&& source, std::vector<StructValue>& dest);
+/* WITHOUT storage */
+void moveInputDataToStructValue(std::vector<InputDataValue>&& source);
 
-void copyInputDataToStructValue(const std::vector<InputDataValue>& source, std::vector<StructValue>& dest);
+void copyInputDataToStructValue(const std::vector<InputDataValue>& source);
 
-void copyInputDataToVariantValue(const std::vector<InputDataValue>& source, std::vector<VariantValue>& dest);
+void copyInputDataToVariantValue(const std::vector<InputDataValue>& source);
+
+/* WITH storage */
+void moveInputDataToStructValue(std::vector<InputDataValue>&& source, std::vector<StructValue>& storage);
+
+void copyInputDataToStructValue(const std::vector<InputDataValue>& source, std::vector<StructValue>& storage);
+
+void copyInputDataToVariantValue(const std::vector<InputDataValue>& source, std::vector<VariantValue>& storage);
