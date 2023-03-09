@@ -16,7 +16,7 @@ public:
     ~LogDuration() {
         auto finish = std::chrono::steady_clock::now();
         auto dur = finish - start;
-        std::cerr << std::setw(50) << std::left << message << " mcs: "
+        std::cerr << std::setw(30) << std::left << message << " mcs: "
             << std::chrono::duration_cast<std::chrono::microseconds>(dur).count()
             << "\n";
     }

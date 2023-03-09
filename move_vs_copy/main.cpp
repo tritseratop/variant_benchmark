@@ -2,6 +2,7 @@
 
 #include <chrono>
 #include <vector>
+#include <queue>
 #include <iostream>
 
 constexpr size_t NUMBER_OF_CYCLES = 10000;
@@ -65,7 +66,7 @@ void OneInstanceMoveTest() {
 
 	std::vector<int> buf;
 
-	LOG_DURATION("Time to move into one instance");
+	LOG_DURATION("Time to move to one instance");
 	for (int i = 0; i < v.size(); ++i) {
 		buf = std::move(v[i]);
 	}
@@ -77,9 +78,39 @@ void OneInstanceCopyTest() {
 
 	std::vector<int> buf;
 
-	LOG_DURATION("Time to copy into one instance");
+	LOG_DURATION("Time to copy to one instance");
 	for (int i = 0; i < v.size(); ++i) {
 		buf = v[i];
+	}
+}
+
+void OneInstanceInQueueMoveTest() {
+	const std::vector<int> templ(NUMBER_OF_CYCLES, 0);
+	std::vector<std::vector<int>> v(NUMBER_OF_SAMPLES, templ);
+
+	std::queue<std::vector<int>> buf;
+
+	LOG_DURATION("Time to move to queue");
+	for (int i = 0; i < v.size(); ++i) {
+		buf.push(std::move(v[i]));
+		if (buf.size() > 10) {
+			buf.pop();
+		}
+	}
+}
+
+void OneInstanceInQueueCopyTest() {
+	const std::vector<int> templ(NUMBER_OF_CYCLES, 0);
+	std::vector<std::vector<int>> v(NUMBER_OF_SAMPLES, templ);
+
+	std::queue<std::vector<int>> buf;
+
+	LOG_DURATION("Time to copy");
+	for (int i = 0; i < v.size(); ++i) {
+		buf.push(v[i]);
+		if (buf.size() > 10) {
+			buf.pop();
+		}
 	}
 }
 
@@ -92,4 +123,7 @@ int main() {
 
 	OneInstanceMoveTest();
 	OneInstanceCopyTest();
+
+	OneInstanceInQueueMoveTest();
+	OneInstanceInQueueCopyTest();
 }
